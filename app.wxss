@@ -1,0 +1,4 @@
+page {
+  font-family:"Noto Sans CJK SC Thin", "Source Han Sans CN Thin";
+  font-size: 32rpx;
+}

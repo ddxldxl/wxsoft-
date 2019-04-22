@@ -1,0 +1,36 @@
+/**
+ * 空格
+ */
+var format = function(text){
+  if(!text){
+    return
+  }
+  var reg = getRegExp("\\\\n","g");
+  return text.replace(reg,"\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
+}
+
+/**
+ * 样式选择
+ */
+var selStyle = function(index){
+  if (index == 0) {
+    return 'ex-tag01'
+  }
+  if(index==1){
+    return 'ex-tag02'
+  }
+  return ''
+}
+
+/**
+ * 数据条数控制
+ */
+var limit = function(arr,length){
+  return arr.slice(0,length)
+}
+
+module.exports = {
+  format: format,
+  selStyle:selStyle,
+  limit: limit
+}

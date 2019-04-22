@@ -1,0 +1,73 @@
+<wxs src="../../util/filter.wxs" module="filter" />
+<view class="container">
+  <view class='head'>
+    <image src="{{book.image}}"></image>
+    <text class='title'>{{book.title}}</text>
+    <text class='author'>{{book.author}}</text>
+  </view>
+  <view class='sub-container'>
+    <text class='headline'>短评</text>
+    <text class='shadow' wx:if="{{!comments}}">暂无评论</text>
+    <view class='comment-container'>
+      <block wx:for="{{filter.limit(comments,10)}}" wx:key="index">
+        <v-tag tag-class="{{filter.selStyle(index)}}" text="{{item.content}}">
+          <text class='num' slot="after">+{{item.nums}}</text>
+        </v-tag>
+      </block>
+    </view>
+  </view>
+  <view class='sub-container'>
+    <text class="headline">内容简介</text>
+    <text class='content' decode="{{true}}">{{filter.format(book.summary)}}</text>
+  </view>
+  <view class='sub-container'>
+    <text class='headline'>书本信息</text>
+    <view class='detail-container'>
+      <view class='vertical description'>
+        <text>出版社</text>
+        <text>出版年</text>
+        <text>页数</text>
+        <text>定价</text>
+        <text>装帧</text>
+      </view>
+      <view class='vertical'>
+        <text>{{book.publisher}}</text>
+        <text>{{book.pubdate}}</text>
+        <text>{{book.pages}}</text>
+        <text>{{book.price}}</text>
+        <text>{{book.binding}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class='post-container' wx:if="{{!posting}}">
+  <view class='post-fake' bind:tap="onFake">
+    <text>输入短评</text>
+  </view>
+  <view class='like-container'>
+    <v-like isLike="{{likeStatus}}" count="{{count}}" bind:like="onLike" class="like" />
+    <v-button class='share-btn' open-type="share">
+      <image class='share' slot="img" src='/images/icon/share.png'></image>
+    </v-button>
+  </view>
+</view>
+
+<!-- 遮罩层 -->
+<v-mask wx:if="{{posting}}" />
+
+<view class='posting-container' wx:if="{{posting}}">
+  <view class='post-header'>
+    <text wx:if="{{comments}}">仅可点击标签+1</text>
+    <text wx:else>暂无标签</text>
+    <text class='cancel' bind:tap="onCancle">取消</text>
+  </view>
+  <view class='comment-container'>
+    <block wx:for="{{filter.limit(comments,3)}}" wx:key="index">
+      <v-tag tag-class="{{filter.selStyle(index)}}" bind:tagging="onTag" text="{{item.content}}">
+        <text class='num' slot="after">+{{item.nums}}</text>
+      </v-tag>
+    </block>
+  </view>
+  <input class='post' bindconfirm='onTag' placeholder='短评最多12个字'></input>
+</view>
